@@ -1,12 +1,13 @@
 import express from 'express';
+import { userRoutes } from './infraestructure/routes/user.routes';
 
 const app = express();
+
+app.use('/user',userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+export { app };
