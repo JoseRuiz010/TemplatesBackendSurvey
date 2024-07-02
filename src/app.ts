@@ -3,7 +3,7 @@ import { userRoutes } from './infraestructure/routes/user.routes';
 
 const app = express();
 
-app.use('/user',userRoutes);
+app.use('/users',userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
