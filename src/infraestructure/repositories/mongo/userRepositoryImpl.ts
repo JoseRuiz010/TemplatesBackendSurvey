@@ -1,11 +1,11 @@
 import { User } from '../../../domain/entities/user';
-import { UserRepository } from '../../../domain/interfaces/IUserRepository';
-
-export class UserRepositoyImpl implements UserRepository {
+import { IUserRepository } from '../../../domain/interfaces/IUserRepository';
+ 
+export class MongoUserRepository implements IUserRepository {
   addColaborador(entity: User): User {
     throw new Error('Method not implemented.');
   }
-  get(): Promise<User> {
+  getAll(): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
   getById(id: string): Promise<User> {
@@ -20,5 +20,4 @@ export class UserRepositoyImpl implements UserRepository {
   delete(id: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
-
 }

@@ -1,4 +1,6 @@
+import "reflect-metadata"
 import express from 'express';
+import './infraestructure/DI/container'
 import { userRoutes } from './infraestructure/routes/user.routes';
 
 const app = express();
