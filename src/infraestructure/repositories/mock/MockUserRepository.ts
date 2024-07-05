@@ -2,7 +2,9 @@ import { Response } from "express";
 import { IUserRepository } from "../../../domain/interfaces/IUserRepository";
 import { User } from "../../../domain/entities/user";
 import { singleton } from "tsyringe";
- 
+import { v4 as uuidv4 } from 'uuid';
+
+
 @singleton()
 export class MockUserRepository implements IUserRepository {
   private users: User[] = [
@@ -13,14 +15,14 @@ export class MockUserRepository implements IUserRepository {
     return this.users
   }
    async getById(id: string): Promise<User> {
-    const user: User | undefined = this.users.find(u => u.id === Number(id));
+    const user: User | undefined = this.users.find(u => u.id == (id));
     if(!user){
        throw new Error(`User width ${id} not found`);
     }
     return user;
   }
   async save(entity: User): Promise<User> {
-    const newUser= entity;
+    const newUser= new User(uuidv4(),entity.name,entity.email);
     this.users.push(newUser);
     return newUser;
   }
@@ -28,9 +30,9 @@ export class MockUserRepository implements IUserRepository {
     throw new Error("Method not implemented.");
   }
   async delete(id: string): Promise<User> {
-    const userDelete= this.users.find(u=> u.id == Number(id))
+    const userDelete= this.users.find(u=> u.id == (id))
     if(!userDelete) throw new Error (`No se encontro el usuario con ID= ${id}`)
-    const aux= this.users.filter(u=> u.id !== Number(id))
+    const aux= this.users.filter(u=> u.id !== (id))
     this.users=aux;
     return userDelete;
   }

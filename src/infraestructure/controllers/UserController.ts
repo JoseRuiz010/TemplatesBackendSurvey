@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserUsesCases } from "../use-cases/userUsesCases";
+import { UserUsesCases } from "../../application/use-cases/userUsesCases";
 import { User } from "../../domain/entities/user";
 import { container } from "tsyringe";
 import { handleResponse } from "../../shared/utils/responseHandler";
@@ -20,29 +20,30 @@ export class UserController {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
       return handleResponse(res, null, errorMessage); 
     }
-
   }
+
   async getById(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params
       const user = await this.userUsesCases.getById(id);
-      return user ? res.status(200).json(user) : res.status(404).json({ message: `User not found` })
+      return handleResponse(res, user);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
       return handleResponse(res, null, errorMessage); 
     }
   }
+
   async createUsers(req: Request, res: Response): Promise<Response> {
     try {
-      const userData = req.body
+      const userData = req.body;     
       const users = await this.userUsesCases.save(userData)
       return res.status(201).json(users);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
       return handleResponse(res, null, errorMessage); 
     }
-
   }
+
   async deleteUsers(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params
@@ -52,7 +53,6 @@ export class UserController {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
       return handleResponse(res, null, errorMessage); 
     }
-
   }
 
 }
