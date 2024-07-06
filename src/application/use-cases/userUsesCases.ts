@@ -2,12 +2,14 @@ import { Response } from "express";
 import { User } from "../../domain/entities/user";
 import { IUserRepository } from "../../domain/interfaces/IUserRepository";
 import { inject, injectable } from "tsyringe";
+import { IValidator } from "../../domain/interfaces/IValidador";
 
 @injectable()
 export class UserUsesCases {
  
   constructor(
-  @inject('IUserRepository')  private userRepository:IUserRepository
+  @inject('IUserRepository')  private userRepository:IUserRepository,
+  @inject('IUserValidator')  private userValidator:IValidator<User>
   ) {}
 
   async getAll(): Promise<User[]> {
@@ -18,7 +20,8 @@ export class UserUsesCases {
     return user;
   }
   async save(entity: User): Promise<User> {
-    const newUser =await this.userRepository.save(entity)
+    const userValidado=this.userValidator.validate(entity);
+    const newUser =await this.userRepository.save(userValidado)
     return newUser;
   }
   async update(id: string, entity: User): Promise<User> {

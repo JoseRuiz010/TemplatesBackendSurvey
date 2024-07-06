@@ -14,8 +14,8 @@ export class UserValidator implements IValidator<CreateUsernDTO>{
         email: z.string().email().min(1, 'must be email valid'),
       });
 
-    validate(data: CreateUsernDTO): void {
-       this.schema.parse({
+    validate(data: CreateUsernDTO): CreateUsernDTO {
+     return  this.schema.parse({
         name:data.name,
         email:data.email
        })

@@ -38,9 +38,9 @@ export class UserController {
       const userData = req.body;     
       const users = await this.userUsesCases.save(userData)
       return res.status(201).json(users);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
-      return handleResponse(res, null, errorMessage); 
+    } catch (error:any) {
+      // const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
+      return handleResponse(res, null, error); 
     }
   }
 
