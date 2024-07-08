@@ -19,7 +19,7 @@ export class UserController {
       return handleResponse(res, users)
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
-      return handleResponse(res, null, errorMessage); 
+      return handleResponse(res, null, errorMessage);
     }
   }
 
@@ -30,35 +30,55 @@ export class UserController {
       return handleResponse(res, user);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
-      return handleResponse(res, null, errorMessage); 
+      return handleResponse(res, null, errorMessage);
     }
   }
 
   async createUsers(req: Request, res: Response): Promise<Response> {
-  try {
-    const userData = req.body;  
-   
+    try {
+      const userData = req.body;
       const newUser = new User(
-      userData.id, 
-      userData.name,
-      userData.email,
-      userData.username,
-      userData.birthDate,
-      userData.password,
-      userData.phone,
-      userData.profileImage,
-      userData.status,
-      userData.lastSeen
-    );     
-    const user = await this.userUsesCases.save(userData)
-    return handleResponse(res, user);
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : error instanceof ZodError? error : 'Failed to delete user';
-    console.log(`Error CTRL ${errorMessage}`)
-    return handleResponse(res, null, errorMessage); 
+        userData.id,
+        userData.name,
+        userData.email,
+        userData.username,
+        userData.birthDate,
+        userData.password,
+        userData.phone,
+        userData.profileImage,
+        userData.status,
+        userData.lastSeen
+      );
+      const user = await this.userUsesCases.save(newUser)
+      return handleResponse(res, user);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : error instanceof ZodError ? error : 'Failed to delete user';
+      console.log(`Error CTRL ${errorMessage}`)
+      return handleResponse(res, null, errorMessage);
+    }
   }
-    
-    
+  async updateUsers(req: Request, res: Response): Promise<Response> {
+    try {
+      const userData = req.body;
+      const newUser = new User(
+        userData.id,
+        userData.name,
+        userData.email,
+        userData.username,
+        userData.birthDate,
+        userData.password,
+        userData.phone,
+        userData.profileImage,
+        userData.status,
+        userData.lastSeen
+      );
+      const user = await this.userUsesCases.update(req.params.id,newUser)
+      return handleResponse(res, user);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : error instanceof ZodError ? error : 'Failed to delete user';
+      console.log(`Error CTRL ${errorMessage}`)
+      return handleResponse(res, null, errorMessage);
+    }
   }
 
   async deleteUsers(req: Request, res: Response): Promise<Response> {
@@ -68,7 +88,7 @@ export class UserController {
       return res.status(204).json(users);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
-      return handleResponse(res, null, errorMessage); 
+      return handleResponse(res, null, errorMessage);
     }
   }
 

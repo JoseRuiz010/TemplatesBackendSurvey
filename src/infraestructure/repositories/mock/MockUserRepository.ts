@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 @singleton()
 export class MockUserRepository implements IUserRepository {
   private users: User[] = [
-    new User(1, "John Doe", "john@example.com","jon010","10-11-1997","12345"),
-    new User(2, "Jane Doe", "jane@example.com","jon011","10-11-2001"),
+    new User(1, "Zulema", "zulema@example.com","jon010","10-11-1997","3816233143",null,null,null,null),
+    new User(2, "Jose", "jose@example.com","jon011","10-11-2001","3814463721",null,null,null,null),
   ];
   async getAll(): Promise<User[]> {
     return this.users

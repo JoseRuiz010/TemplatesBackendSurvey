@@ -28,7 +28,8 @@ export class UserUsesCases {
     return newUser;
   }
   async update(id: string, entity: User): Promise<User> {
-    throw new Error("Method not implemented.");
+    const user= await this.userRepository.update(id,entity);
+    return user;
   }
   async delete(id: string): Promise<User> {
    const userDelete=await this.userRepository.delete(id)

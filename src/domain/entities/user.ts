@@ -4,11 +4,11 @@ export class User {
   private email: string;
   private userName: string;
   private birthDate: string;
-  private password?: string;
-  private phone?: string;
-  private profileImage?: string;
-  private status?: string;
-  private lastSeen?: string;
+  private password: string | null;
+  private phone: string | null;
+  private profileImage: string | null;
+  private status: string | null;
+  private lastSeen: string | null;
 
   constructor(
     _id: number | string,
@@ -16,11 +16,11 @@ export class User {
     _email: string,
     _userName: string,
     _birthDate: string,
-    _password?: string,
-    _phone?: string,
-    _profileImage?: string,
-    _status?: string,
-    _lastSeen?: string
+    _password: string | null,
+    _phone: string | null,
+    _profileImage: string | null,
+    _status: string | null,
+    _lastSeen: string | null
   ) {
     this.id = _id;
     this.name = _name;
@@ -54,23 +54,23 @@ export class User {
     return this.birthDate;
   }
 
-  get getPassword(): string | undefined {
+  get getPassword(): string | null {
     return this.password;
   }
 
-  get getPhone(): string | undefined {
+  get getPhone(): string | null {
     return this.phone;
   }
 
-  get getProfileImage(): string | undefined {
+  get getProfileImage(): string | null {
     return this.profileImage;
   }
 
-  get getStatus(): string | undefined {
+  get getStatus(): string | null {
     return this.status;
   }
 
-  get getLastSeen(): string | undefined {
+  get getLastSeen(): string | null{
     return this.lastSeen;
   }
 }

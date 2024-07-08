@@ -1,4 +1,4 @@
-export class Quiz {
+export class Survey {
   constructor(
     public id: string,
     public title: string,

@@ -1,0 +1,16 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "email" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "userName" TEXT NOT NULL,
+    "birthDate" TEXT NOT NULL,
+    "password" TEXT,
+    "phone" TEXT,
+    "profileImage" TEXT,
+    "status" TEXT,
+    "lastSeen" TEXT
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
