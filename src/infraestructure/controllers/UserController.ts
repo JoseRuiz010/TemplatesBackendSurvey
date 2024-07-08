@@ -3,6 +3,7 @@ import { UserUsesCases } from "../../application/use-cases/userUsesCases";
 import { User } from "../../domain/entities/user";
 import { container } from "tsyringe";
 import { handleResponse } from "../../shared/utils/responseHandler";
+import { ZodError } from "zod";
 
 export class UserController {
 
@@ -34,14 +35,30 @@ export class UserController {
   }
 
   async createUsers(req: Request, res: Response): Promise<Response> {
-    try {
-      const userData = req.body;     
-      const users = await this.userUsesCases.save(userData)
-      return res.status(201).json(users);
-    } catch (error:any) {
-      // const errorMessage = error instanceof Error ? error.message : 'Failed to delete user';
-      return handleResponse(res, null, error); 
-    }
+  try {
+    const userData = req.body;  
+   
+      const newUser = new User(
+      userData.id, 
+      userData.name,
+      userData.email,
+      userData.username,
+      userData.birthDate,
+      userData.password,
+      userData.phone,
+      userData.profileImage,
+      userData.status,
+      userData.lastSeen
+    );     
+    const user = await this.userUsesCases.save(userData)
+    return handleResponse(res, user);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : error instanceof ZodError? error : 'Failed to delete user';
+    console.log(`Error CTRL ${errorMessage}`)
+    return handleResponse(res, null, errorMessage); 
+  }
+    
+    
   }
 
   async deleteUsers(req: Request, res: Response): Promise<Response> {

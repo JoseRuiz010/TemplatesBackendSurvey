@@ -13,15 +13,18 @@ export class UserUsesCases {
   ) {}
 
   async getAll(): Promise<User[]> {
-    return await this.userRepository.getAll()
+     const users= await this.userRepository.getAll()
+     console.log({users});
+     
+    return users
   }
    async getById(id: string): Promise<User> {
     const user: User =await this.userRepository.getById(id)
     return user;
   }
   async save(entity: User): Promise<User> {
-    const userValidado=this.userValidator.validate(entity);
-    const newUser =await this.userRepository.save(userValidado)
+    // const userValidado=this.userValidator.validate(entity);
+    const newUser =await this.userRepository.save(entity)
     return newUser;
   }
   async update(id: string, entity: User): Promise<User> {
