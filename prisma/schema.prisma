@@ -22,3 +22,14 @@ model User {
   status String?
   lastSeen String? 
 }
+model Survey {
+  id    Int     @id @default(autoincrement())
+  name  String
+  description String
+  type String?
+  sub_type String?
+  // profileImage String?
+  status String?
+  visible Boolean?
+  enabled Boolean?
+}

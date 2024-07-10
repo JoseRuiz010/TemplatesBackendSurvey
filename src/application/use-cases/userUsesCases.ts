@@ -23,7 +23,6 @@ export class UserUsesCases {
     return user;
   }
   async save(entity: User): Promise<User> {
-    // const userValidado=this.userValidator.validate(entity);
     const newUser =await this.userRepository.save(entity)
     return newUser;
   }
