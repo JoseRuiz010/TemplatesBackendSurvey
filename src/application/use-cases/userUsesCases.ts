@@ -3,6 +3,7 @@ import { User } from "../../domain/entities/user";
 import { IUserRepository } from "../../domain/interfaces/IUserRepository";
 import { inject, injectable } from "tsyringe";
 import { IValidator } from "../../domain/interfaces/IValidador";
+import { CreateUserDTO } from "../../domain/dtos/user.dtos";
 
 @injectable()
 export class UserUsesCases {
@@ -22,8 +23,18 @@ export class UserUsesCases {
     const user: User =await this.userRepository.getById(id)
     return user;
   }
-  async save(entity: User): Promise<User> {
-    const newUser =await this.userRepository.save(entity)
+  async save(entity: CreateUserDTO): Promise<User> {
+      const userData = new User(
+        entity.id,
+        entity.name,
+        entity.email,
+        entity.username,
+        entity.birthDate,
+        entity.password,
+        entity.phone,
+        entity.profileImage,
+      );
+    const newUser =await this.userRepository.save(userData)
     return newUser;
   }
   async update(id: string, entity: User): Promise<User> {

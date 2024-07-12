@@ -20,11 +20,11 @@ export class User {
     _userName: string,
     _birthDate: string,
     _password: string | null,
-    _phone: string | null,
-    _profileImage: string | null,
-    _status: string | null,
-    _lastSeen: string | null,
-    _surveys:Survey[]
+    _phone: string | null= null,
+    _profileImage: string | null=null,
+    _status: string | null=null,
+    _lastSeen: string | null=null,
+    _surveys:Survey[]=[]
   ) {
     this.id = _id;
     this.name = _name;
