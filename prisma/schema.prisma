@@ -9,19 +9,6 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  userName String
-  birthDate String
-  password String ?
-  phone  String?
-  profileImage String?
-  status String?
-  lastSeen String? 
-}
 model Survey {
   id    Int     @id @default(autoincrement())
   name  String
@@ -32,4 +19,20 @@ model Survey {
   status String?
   visible Boolean?
   enabled Boolean
+  user User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String
+  userName String
+  birthDate String
+  password String ?
+  phone  String?
+  profileImage String?
+  status String?
+  lastSeen String?
+  surveys Survey[]
+}
+

@@ -4,13 +4,18 @@ import { User } from "../../../domain/entities/user";
 import { singleton } from "tsyringe";
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '@prisma/client'
+import { Survey } from "../../../domain/entities/Survey";
 
 @singleton()
 export class MysqlUserRepository implements IUserRepository {
   private prisma = new PrismaClient();
  
   async getAll(): Promise<User[]> {
-    const usersPrisma=await this.prisma.user.findMany()
+    const usersPrisma=await this.prisma.user.findMany({
+      include:{
+        surveys:true
+      }
+    })
     console.log("MYSQL",usersPrisma);
     
     return (usersPrisma).map(u=> new User(
@@ -23,7 +28,8 @@ export class MysqlUserRepository implements IUserRepository {
       u.phone,
       u.profileImage,
       u.status,
-      u.lastSeen
+      u.lastSeen,
+      u.surveys.map(s=>new Survey(s.id,s.name,s.description,s.type,s.sub_type,s.status,s.visible,s.enabled))
     ))
   }
    async getById(id: string): Promise<User> {
@@ -41,7 +47,8 @@ export class MysqlUserRepository implements IUserRepository {
       u.phone,
       u.profileImage,
       u.status,
-      u.lastSeen
+      u.lastSeen,
+      []
     )
     
   }
@@ -78,7 +85,8 @@ export class MysqlUserRepository implements IUserRepository {
       newUser.phone,
       newUser.profileImage,
       newUser.status,
-      newUser.lastSeen
+      newUser.lastSeen,
+      []
     );
   }
   async update(id: string, entity: User): Promise<User> {
@@ -115,7 +123,8 @@ export class MysqlUserRepository implements IUserRepository {
       userUpdate.phone,
       userUpdate.profileImage,
       userUpdate.status,
-      userUpdate.lastSeen
+      userUpdate.lastSeen,
+      []
     );
   }
   async delete(id: string): Promise<User> {

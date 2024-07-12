@@ -47,7 +47,8 @@ export class UserController {
         userData.phone,
         userData.profileImage,
         userData.status,
-        userData.lastSeen
+        userData.lastSeen,
+        []
       );
       const user = await this.userUsesCases.save(newUser)
       return handleResponse(res, user);
@@ -70,7 +71,8 @@ export class UserController {
         userData.phone,
         userData.profileImage,
         userData.status,
-        userData.lastSeen
+        userData.lastSeen,
+        []
       );
       const user = await this.userUsesCases.update(req.params.id,newUser)
       return handleResponse(res, user);

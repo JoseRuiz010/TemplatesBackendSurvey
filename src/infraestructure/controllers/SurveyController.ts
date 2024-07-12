@@ -47,7 +47,7 @@ export class SurveyController {
         data.sub_type,
         data.status,
         data.visible,
-        data.enabled
+        data.enabled,
       );
       const entity = await this.surveyUsesCases.save(newUser)
       return handleResponse(res, entity);

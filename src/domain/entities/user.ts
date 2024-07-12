@@ -1,3 +1,5 @@
+import { Survey } from "./Survey";
+
 export class User {
   private id: number | string;
   private name: string;
@@ -9,6 +11,7 @@ export class User {
   private profileImage: string | null;
   private status: string | null;
   private lastSeen: string | null;
+  private surveys:Survey[]
 
   constructor(
     _id: number | string,
@@ -20,7 +23,8 @@ export class User {
     _phone: string | null,
     _profileImage: string | null,
     _status: string | null,
-    _lastSeen: string | null
+    _lastSeen: string | null,
+    _surveys:Survey[]
   ) {
     this.id = _id;
     this.name = _name;
@@ -32,6 +36,7 @@ export class User {
     this.profileImage = _profileImage;
     this.status = _status;
     this.lastSeen = _lastSeen;
+    this.surveys=_surveys
   }
 
   get getId(): number | string {
@@ -72,6 +77,9 @@ export class User {
 
   get getLastSeen(): string | null{
     return this.lastSeen;
+  }
+  get getSurveys(): Survey[] | null{
+    return this.surveys;
   }
 }
 

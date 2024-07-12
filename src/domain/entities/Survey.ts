@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Survey {
   private id: string | number;
   private name:string;
@@ -7,6 +9,8 @@ export class Survey {
   private status:string| null;
   private visible:boolean| null;
   private enabled:boolean;
+  private user:User | null;
+
   constructor(
     _id: string | number ,
     _name:string,
@@ -16,6 +20,7 @@ export class Survey {
     _status:string | null,
     _visible:boolean| null=true,
     _enabled:boolean =true,
+    _user:User|null = null
   ) {
     this.id=_id
     this.name=_name
@@ -25,6 +30,7 @@ export class Survey {
     this.status=_status
     this.visible=_visible
     this.enabled=_enabled
+    this.user=_user
   }
 
 get getId(){
@@ -50,6 +56,9 @@ get getVisible(){
 }
 get getEnabled(){
   return this.enabled
+} 
+get getUser(){
+  return this.user
 } 
 
 

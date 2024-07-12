@@ -12,8 +12,12 @@ export class MysqlSurveyRepository implements ISurveyRepository {
   private prisma = new PrismaClient();
  
   async getAll(): Promise<Survey[]> {
-    const responsePrisma=await this.prisma.survey.findMany()
-    console.log("MYSQL",responsePrisma);
+    const responsePrisma=await this.prisma.survey.findMany({
+      include:{
+        user:true
+      }
+    })
+    console.log("MYSQL",JSON.stringify(responsePrisma));
     
     return responsePrisma.map(u=> new Survey(
       u.id,
@@ -23,7 +27,8 @@ export class MysqlSurveyRepository implements ISurveyRepository {
       u.sub_type,
       u.status,
       u.visible,
-      u.enabled
+      u.enabled,
+      u.user?new User(u.user?.id,u.user?.name,u.user?.email,u.user?.userName,u.user?.birthDate,'',u.user?.phone,u.user?.phone,u.user?.status,u.user?.lastSeen,[]):null
     ))
   }
    async getById(id: string): Promise<Survey> {
