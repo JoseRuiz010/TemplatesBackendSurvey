@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { UserController } from "../controllers/UserController";
+import { container } from "tsyringe";
 
 const router = Router();
-const userController = new UserController();
+const userController = container.resolve(UserController)
 
 router.get('/', (req, res) => userController.getAllUsers(req, res));
 router.get('/:id', (req, res) => userController.getById(req, res));

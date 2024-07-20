@@ -25,10 +25,10 @@ export class UserUsesCases {
   }
   async save(entity: CreateUserDTO): Promise<User> {
       const userData = new User(
-        entity.id,
+        '',
         entity.name,
         entity.email,
-        entity.username,
+        entity.userName,
         entity.birthDate,
         entity.password,
         entity.phone,

@@ -1,16 +1,20 @@
 import { Request, Response } from "express";
 import { UserUsesCases } from "../../application/use-cases/userUsesCases";
 import { User } from "../../domain/entities/user";
-import { container } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 import { handleResponse } from "../../shared/utils/responseHandler";
 import { ZodError } from "zod";
 import { CreateUserDTO } from './../../domain/dtos/user.dtos';
+import { IValidator } from "../../domain/interfaces/IValidador";
 
+@injectable()
 export class UserController {
 
   private userUsesCases: UserUsesCases;
 
-  constructor() {
+  constructor(
+    @inject('IUserValidator')  private userValidator:IValidator<User>
+  ) {
     this.userUsesCases = container.resolve(UserUsesCases)
   }
 
@@ -37,9 +41,10 @@ export class UserController {
 
   async createUsers(req: Request, res: Response): Promise<Response> {
     try {
-      const userData:CreateUserDTO = req.body;
-    
-      const user = await this.userUsesCases.save(userData)
+      const userData =this.userValidator.validate(req.body);
+      console.log({userData})
+      const user = await this.userUsesCases.save(userData as unknown as CreateUserDTO)
+      // const user = null
       return handleResponse(res, user);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : error instanceof ZodError ? error : 'Failed to delete user';

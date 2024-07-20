@@ -1,16 +1,14 @@
 // src/dtos/UserDTO.ts
 
 export interface CreateUserDTO {
-  id: string;
+  // id: string?;
   name: string;
   email: string;
-  username: string;
+  userName: string;
   birthDate: string;
   password: string ;
   phone: string | null;
-  profileImage: string | null;
-  // status: string | null;
-  // lastSeen: string | null;
+  profileImage?: string | null |undefined;
 }
 
 export interface UpdateUserDTO {

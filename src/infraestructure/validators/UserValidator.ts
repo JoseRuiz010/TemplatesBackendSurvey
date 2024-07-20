@@ -1,35 +1,38 @@
-import { User } from "../../domain/entities/user";
-import { IValidator } from "../../domain/interfaces/IValidador";
-import { z,ZodErrorMap } from 'zod';
+import { CreateUserDTO } from "../../domain/dtos/user.dtos";
+ import { IValidator } from "../../domain/interfaces/IValidador";
+import {  z } from 'zod';
 
-export interface CreateUsernDTO {
-  name: string;
-  email: string;
-  username: string;
-  phone: string | null;
-  birth_date: string;
-}
+// export interface CreateUsernDTO {
+//   name: string;
+//   email: string;
+//   username: string;
+//   phone: string | null;
+//   birth_date: string;
+// }
 
-export class UserValidator implements IValidator<CreateUsernDTO> {
+export class UserValidator implements IValidator<CreateUserDTO> {
 
   private schema = z.object({
+    // id: z.string().nullable().optional(),
     name: z.string().min(4, 'name name must be a mare 4'),
     email: z.string().email().min(1, 'must be email valid'),
-    username: z.string(),
+    userName: z.string(),
+    birthDate:z.string(),
+    password:z.string(),
     phone: z.string().nullable(),
-    profile_image: z.string().optional().nullable(),
-    status: z.string().optional().nullable(),
-    birth_date: z.string(),
-    last_seen: z.string().optional().nullable(),
+    profileImage: z.string().nullable().optional()
   });
 
-  validate(data: CreateUsernDTO): CreateUsernDTO {
+  validate(data: CreateUserDTO): CreateUserDTO {
     return this.schema.parse({
+      // id:data.id,    
       name: data.name,
       email: data.email,
-      username: data.username,
+      userName: data.userName,
+      birthDate: data.birthDate,
+      password:data.password,
       phone: data.phone,
-      birth_date: data.birth_date
+      profileImage:data.profileImage
     })
   }
 
