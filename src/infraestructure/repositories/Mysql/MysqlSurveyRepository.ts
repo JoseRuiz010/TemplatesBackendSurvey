@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '@prisma/client'
 import { ISurveyRepository } from "../../../domain/interfaces/ISurveyRepository ";
 import { Survey } from "../../../domain/entities/Survey";
+import { SurveyDTO } from "../../../domain/dtos/user.dtos";
 
 @singleton()
 export class MysqlSurveyRepository implements ISurveyRepository {
@@ -19,17 +20,27 @@ export class MysqlSurveyRepository implements ISurveyRepository {
     })
     console.log("MYSQL",JSON.stringify(responsePrisma));
     
-    return responsePrisma.map(u=> new Survey(
-      u.id,
-      u.name,
-      u.description,
-      u.type,
-      u.sub_type,
-      u.status,
-      u.visible,
-      u.enabled,
-      u.user?new User(u.user?.id,u.user?.name,u.user?.email,u.user?.userName,u.user?.birthDate,'',u.user?.phone,u.user?.phone,u.user?.status,u.user?.lastSeen,[]):null
-    ))
+    return responsePrisma.map(survey => new Survey({
+      id: survey.id,
+      name: survey.name,
+      description: survey.description,
+      type: survey.type,
+      sub_type: survey.sub_type,
+      status: survey.status,
+      visible: survey.visible,
+      enabled: survey.enabled,
+      user: survey.user ? {
+        id: survey.user.id,
+        name: survey.user.name,
+        email: survey.user.email,
+        userName: survey.user.userName,
+        birthDate: survey.user.birthDate,
+        phone: survey.user.phone,
+        profileImage: survey.user.profileImage,
+        status: survey.user.status,
+        lastSeen: survey.user.lastSeen
+      } : undefined
+    }));
   }
    async getById(id: string): Promise<Survey> {
     const u =await this.prisma.survey.findUnique({where:{id:Number(id)}});
@@ -48,7 +59,7 @@ export class MysqlSurveyRepository implements ISurveyRepository {
     )
     
   }
-  async save(entity: Survey): Promise<Survey> {
+  async save(entity: SurveyDTO): Promise<Survey> {
     const {
       getName,
       getDescription,

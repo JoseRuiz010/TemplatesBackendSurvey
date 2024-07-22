@@ -5,6 +5,7 @@ import { inject, injectable } from "tsyringe";
 import { IValidator } from "../../domain/interfaces/IValidador";
 import { ISurveyRepository } from "../../domain/interfaces/ISurveyRepository ";
 import { Survey } from "../../domain/entities/Survey";
+import { CreateSurveyDTO, SurveyDTO, UpdateSurveyDTO } from "../../domain/dtos/user.dtos";
  
 @injectable()
 export class SurveyUsesCases {
@@ -24,11 +25,11 @@ export class SurveyUsesCases {
     const survey =await this.surveyRepository.getById(id)
     return survey;
   }
-  async save(entity: Survey): Promise<Survey> {
+  async save(entity: CreateSurveyDTO): Promise<Survey> {
     const newSurvey =await this.surveyRepository.save(entity)
     return newSurvey;
   }
-  async update(id: string, entity: Survey): Promise<Survey> {
+  async update(id: string, entity: UpdateSurveyDTO): Promise<Survey> {
     const survey= await this.surveyRepository.update(id,entity);
     return survey;
   }

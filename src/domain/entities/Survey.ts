@@ -1,66 +1,54 @@
+import { SurveyDTO } from "../dtos/user.dtos";
 import { User } from "./user";
 
 export class Survey {
   private id: string | number;
-  private name:string;
-  private description:string;
-  private type:string| null;
-  private sub_type:string| null;
-  private status:string| null;
-  private visible:boolean| null;
-  private enabled:boolean;
-  private user:User | null;
+  private name: string;
+  private description: string;
+  private type?: string;
+  private sub_type?: string;
+  private status?: string;
+  private visible?: boolean;
+  private enabled: boolean;
+  private user?: User;
 
-  constructor(
-    _id: string | number ,
-    _name:string,
-    _description:string,
-    _type:string| null,
-    _sub_type:string | null,
-    _status:string | null,
-    _visible:boolean| null=true,
-    _enabled:boolean =true,
-    _user:User|null = null
-  ) {
-    this.id=_id
-    this.name=_name
-    this.description=_description
-    this.type=_type
-    this.sub_type=_sub_type
-    this.status=_status
-    this.visible=_visible
-    this.enabled=_enabled
-    this.user=_user
+  constructor(surveyDTO: SurveyDTO) {
+    this.id = surveyDTO.id;
+    this.name = surveyDTO.name;
+    this.description = surveyDTO.description;
+    this.type = surveyDTO.type;
+    this.sub_type = surveyDTO.sub_type;
+    this.status = surveyDTO.status;
+    this.visible = surveyDTO.visible;
+    this.enabled = surveyDTO.enabled;
+    this.user = surveyDTO.user ? new User(surveyDTO.user) : undefined;
   }
 
-get getId(){
-  return this.id
-}
-get getName(){
-  return this.name
-}  
-get getDescription(){
-  return this.description
-}
-get getType(){
-  return this.type
-}
-get getSubType(){
-  return this.sub_type
-}  
-get getStatus(){
-  return this.status
-}
-get getVisible(){
-  return this.visible
-}
-get getEnabled(){
-  return this.enabled
-} 
-get getUser(){
-  return this.user
-} 
-
-
-
+  get getId() {
+    return this.id
+  }
+  get getName() {
+    return this.name
+  }
+  get getDescription() {
+    return this.description
+  }
+  get getType() {
+    return this.type
+  }
+  get getSubType() {
+    return this.sub_type
+  }
+  get getStatus() {
+    return this.status
+  }
+  get getVisible() {
+    return this.visible
+  }
+  get getEnabled() {
+    return this.enabled
+  }
+  get getUser() {
+    return this.user
+  }
 }

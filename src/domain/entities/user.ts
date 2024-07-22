@@ -1,3 +1,4 @@
+import { UserDTO } from "../dtos/user.dtos";
 import { Survey } from "./Survey";
 
 export class User {
@@ -6,37 +7,25 @@ export class User {
   private email: string;
   private userName: string;
   private birthDate: string;
-  private password: string | null;
-  private phone: string | null;
-  private profileImage: string | null;
-  private status: string | null;
-  private lastSeen: string | null;
-  private surveys:Survey[]
+  private password?: string;
+  private phone?: string;
+  private profileImage?: string;
+  private status?: string;
+  private lastSeen?: string;
+  private surveys?: Survey[];
 
-  constructor(
-    _id: number | string,
-    _name: string,
-    _email: string,
-    _userName: string,
-    _birthDate: string,
-    _password: string | null,
-    _phone: string | null= null,
-    _profileImage: string | null=null,
-    _status: string | null=null,
-    _lastSeen: string | null=null,
-    _surveys:Survey[]=[]
-  ) {
-    this.id = _id;
-    this.name = _name;
-    this.email = _email;
-    this.userName = _userName;
-    this.birthDate = new UserBirthDate(_birthDate).value;
-    this.password = _password;
-    this.phone = _phone;
-    this.profileImage = _profileImage;
-    this.status = _status;
-    this.lastSeen = _lastSeen;
-    this.surveys=_surveys
+  constructor(userDTO:UserDTO) {
+    this.id = userDTO.id;
+    this.name = userDTO.name;
+    this.email = userDTO.email;
+    this.userName = userDTO.userName;
+    this.birthDate = new UserBirthDate(userDTO.birthDate).value;
+    this.password = userDTO.password;
+    this.phone = userDTO.phone;
+    this.profileImage = userDTO.profileImage;
+    this.status = userDTO.status;
+    this.lastSeen = userDTO.lastSeen;
+    this.surveys = userDTO.surveys?.map(s => new Survey(s)) || [];
   }
 
   get getId(): number | string {
@@ -59,26 +48,26 @@ export class User {
     return this.birthDate;
   }
 
-  get getPassword(): string | null {
+  get getPassword(): string | undefined {
     return this.password;
   }
 
-  get getPhone(): string | null {
+  get getPhone(): string | undefined {
     return this.phone;
   }
 
-  get getProfileImage(): string | null {
+  get getProfileImage(): string | undefined {
     return this.profileImage;
   }
 
-  get getStatus(): string | null {
+  get getStatus(): string | undefined {
     return this.status;
   }
 
-  get getLastSeen(): string | null{
+  get getLastSeen(): string | undefined{
     return this.lastSeen;
   }
-  get getSurveys(): Survey[] | null{
+  get getSurveys(): Survey[] | undefined{
     return this.surveys;
   }
 }
